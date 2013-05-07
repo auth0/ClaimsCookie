@@ -1,10 +1,11 @@
 ﻿namespace ClaimsCookie
 {
-    using Microsoft.IdentityModel.Claims;
-    using Microsoft.IdentityModel.Web;
     using System;
     using System.Collections.Generic;
+    using System.IdentityModel.Services;
+    using System.IdentityModel.Services.Tokens;
     using System.Linq;
+    using System.Security.Claims;
 
     public class ClaimsCookieModule : SessionAuthenticationModule
     {
@@ -18,9 +19,9 @@
             }
         }
 
-        protected override void InitializePropertiesFromConfiguration(string serviceName)
+        protected override void InitializePropertiesFromConfiguration()
         {
-            this.ServiceConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
+            this.FederationConfiguration.IdentityConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
         }
 
         public virtual void CreateSessionSecurityToken(IDictionary<string, string> user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, bool persistent = false, TimeSpan? persistentCookieLifetime = null)

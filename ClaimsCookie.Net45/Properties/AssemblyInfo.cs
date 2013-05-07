@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ClaimsCookie")]
+[assembly: AssemblyTitle("ClaimsCookie.Net45")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ClaimsCookie")]
-[assembly: AssemblyCopyright("Copyright Auth0 ©  2013")]
+[assembly: AssemblyProduct("ClaimsCookie.Net45")]
+[assembly: AssemblyCopyright("Copyright Auth0 © 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c7c73e74-a889-49bb-b697-7015ce083473")]
+[assembly: Guid("2442dc5d-8277-46b8-a964-6ad22f929b00")]
 
 // Version information for an assembly consists of the following four values:
 //
