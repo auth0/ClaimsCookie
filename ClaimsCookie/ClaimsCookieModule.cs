@@ -3,8 +3,8 @@
     using Microsoft.IdentityModel.Claims;
     using Microsoft.IdentityModel.Web;
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class ClaimsCookieModule : SessionAuthenticationModule
     {
@@ -23,7 +23,7 @@
             this.ServiceConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
         }
 
-        public virtual void CreateSessionSecurityToken(IDictionary<string, string> user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, bool persistent = false, TimeSpan? persistentCookieLifetime = null)
+        public virtual void CreateSessionSecurityToken(Hashtable user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, bool persistent = false, TimeSpan? persistentCookieLifetime = null)
         {
             if (!string.IsNullOrEmpty(domain)) 
             {
@@ -43,9 +43,29 @@
             this.CookieHandler.RequireSsl = requireSsl;
             this.CookieHandler.HideFromClientScript = httpOnly;
 
-            user.Add(new KeyValuePair<string, string>(ClaimTypes.Name, user["name"]));
-            var claims = from attribute in user
-                         select new Claim(attribute.Key, attribute.Value == null ? string.Empty : attribute.Value);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user["name"].ToString())
+            };
+
+            foreach (DictionaryEntry attribute in user)
+            {
+                var claimType = attribute.Key.ToString();
+
+                if (attribute.Value.GetType().IsArray)
+                {
+                    // Attribute contains an array of values (e.g.: "group" => [ "sales", "producers" ])
+                    foreach (var subattribute in attribute.Value as IEnumerable)
+                    {
+                        claims.Add(new Claim(claimType, subattribute.ToString()));
+                    }
+                }
+                else
+                {
+                    claims.Add(
+                        new Claim(claimType, attribute.Value != null ? attribute.Value.ToString() : string.Empty));
+                }
+            }
 
             var principal = new ClaimsPrincipal(new ClaimsIdentity[] { new ClaimsIdentity(claims) });
 
