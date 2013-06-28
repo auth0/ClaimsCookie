@@ -16,9 +16,9 @@ Usage:
 
 var user = new List&lt;KeyValuePair&lt;string, object&gt;&gt;
 {
-	new KeyValuePair<string, object>("name", "John Foo"),
-	new KeyValuePair<string, object>("id", "1234"),
-	new KeyValuePair<string, object>("email", "foo@gmail.com")
+	new KeyValuePair&lt;string, object&gt;("name", "John Foo"),
+	new KeyValuePair&lt;string, object&gt;("id", "1234"),
+	new KeyValuePair&lt;string, object&gt;("email", "foo@gmail.com")
 };
 
 ClaimsCookieModule.Instance.CreateSessionSecurityToken(user);
@@ -44,9 +44,9 @@ The cookie will be chunked in multiple cookies to avoid hitting a limit if you a
       <frameworkAssembly assemblyName="System.IdentityModel" targetFramework=".NETFramework4.0" />
       <frameworkAssembly assemblyName="System.IdentityModel.Services" targetFramework=".NETFramework4.5" />
     </frameworkAssemblies>
-	<files>
-      <file src="..\ClaimsCookie\bin\Release\ClaimsCookie.dll" target="lib\net40" />
-	  <file src="..\ClaimsCookie.Net45\bin\Release\ClaimsCookie.dll" target="lib\net45" />
-	</files>
   </metadata>
+  <files>
+    <file src="..\ClaimsCookie\bin\Release\ClaimsCookie.dll" target="lib\net40" />
+    <file src="..\ClaimsCookie.Net45\bin\Release\ClaimsCookie.dll" target="lib\net45" />
+  </files>
 </package>
