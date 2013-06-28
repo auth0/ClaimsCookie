@@ -14,12 +14,12 @@
 
 Usage:
 
-var user = new Dictionary&lt;string, string&gt;
-            {
-                { "name", "John Foo" },
-                { "id", "1234" },
-                { "email", "foo@gmail.com" }
-            };
+var user = new List&lt;KeyValuePair&lt;string, object&gt;&gt;
+{
+	new KeyValuePair<string, object>("name", "John Foo"),
+	new KeyValuePair<string, object>("id", "1234"),
+	new KeyValuePair<string, object>("email", "foo@gmail.com")
+};
 
 ClaimsCookieModule.Instance.CreateSessionSecurityToken(user);
 
