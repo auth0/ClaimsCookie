@@ -46,14 +46,14 @@
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.First(a => a.Key == "name").ToString())
+                new Claim(ClaimTypes.Name, user.First(a => a.Key == "name").Value.ToString())
             };
 
             foreach (var attribute in user)
             {
                 var claimType = attribute.Key;
 
-                if (attribute.Value.GetType().IsArray)
+                if (attribute.Value != null && attribute.Value.GetType().IsArray)
                 {
                     // Attribute contains an array of values (e.g.: "group" => [ "sales", "producers" ])
                     foreach (var subattribute in attribute.Value as IEnumerable)
