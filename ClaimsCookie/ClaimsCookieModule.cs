@@ -24,9 +24,9 @@
             this.ServiceConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
         }
 
-        public virtual void CreateSessionSecurityToken(IEnumerable<KeyValuePair<string, object>> user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, bool persistent = false, TimeSpan? persistentCookieLifetime = null)
+        public virtual void CreateSessionSecurityToken(IEnumerable<KeyValuePair<string, object>> user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, TimeSpan? sessionCookieLifetime = null, bool persistent = false)
         {
-            if (!string.IsNullOrEmpty(domain)) 
+            if (!string.IsNullOrEmpty(domain))
             {
                 this.CookieHandler.Domain = domain;
             }
@@ -46,7 +46,9 @@
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.First(a => a.Key == "name").Value.ToString())
+                new Claim(ClaimTypes.Name, user.First(a => a.Key == "name").Value.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.First(a => a.Key == "user_id").Value.ToString()),
+                new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", user.First(a => a.Key == "connection").Value.ToString())
             };
 
             foreach (var attribute in user)
@@ -68,11 +70,11 @@
                 }
             }
 
-            var principal = new ClaimsPrincipal(new ClaimsIdentity[] { new ClaimsIdentity(claims) });
+            var principal = new ClaimsPrincipal(new ClaimsIdentity[] { new ClaimsIdentity(claims, "Auth0") });
 
             this.OnBeforeCreateCookie(new BeforeCreateCookieEventArgs { Principal = principal });
 
-            var session = this.CreateSessionSecurityToken(principal, extraData, DateTime.Now, persistent && persistentCookieLifetime.HasValue ? DateTime.Now.Add(persistentCookieLifetime.Value) : DateTime.MaxValue, false);
+            var session = this.CreateSessionSecurityToken(principal, extraData, DateTime.UtcNow, sessionCookieLifetime.HasValue ? DateTime.UtcNow.Add(sessionCookieLifetime.Value) : DateTime.MaxValue.ToUniversalTime(), persistent);
             this.AuthenticateSessionSecurityToken(session, true);
         }
 
