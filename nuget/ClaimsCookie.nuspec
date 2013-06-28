@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ClaimsCookie</id>
+    <version>0.9.7</version>
+    <title>Serialize User Info in a Protected Cookie</title>
+    <authors>Auth0</authors>
+    <owners>Auth0</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/auth0/ClaimsCookie</projectUrl>
+    <iconUrl>http://secure.gravatar.com/avatar/805765c256ff8617fcad483b5476faf2</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An HttpModule that will serialize user information to a chunked protected cookie (with MachineKey) and deserialize on every request to a ClaimsPrincipal.
+
+Usage:
+
+var user = new Dictionary&lt;string, string&gt;
+            {
+                { "name", "John Foo" },
+                { "id", "1234" },
+                { "email", "foo@gmail.com" }
+            };
+
+ClaimsCookieModule.Instance.CreateSessionSecurityToken(user);
+
+That's it. Now, you will be able to access the user claims like this:
+
+((IClaimsIdentity)User.Identity).Claims
+
+The cookie will be chunked in multiple cookies to avoid hitting a limit if you are storing lots of user info and it will be deflated and protected with the machine key.</description>
+    <copyright>Copyright 2013</copyright>
+    <tags>WIF Session Cookie ASP.NET Auth0</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="Microsoft.IdentityModel" version="6.1.7600.16394" />
+        <dependency id="WebActivatorEx" version="2.0.1" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="WebActivatorEx" version="2.0.1" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.IdentityModel" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.IdentityModel" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.IdentityModel.Services" targetFramework=".NETFramework4.5" />
+    </frameworkAssemblies>
+	<files>
+      <file src="..\ClaimsCookie\bin\Release\ClaimsCookie.dll" target="lib\net40" />
+	  <file src="..\ClaimsCookie.Net45\bin\Release\ClaimsCookie.dll" target="lib\net45" />
+	</files>
+  </metadata>
+</package>
