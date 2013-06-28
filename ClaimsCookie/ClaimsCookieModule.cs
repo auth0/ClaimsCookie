@@ -5,6 +5,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class ClaimsCookieModule : SessionAuthenticationModule
     {
@@ -23,7 +24,7 @@
             this.ServiceConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
         }
 
-        public virtual void CreateSessionSecurityToken(Hashtable user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, bool persistent = false, TimeSpan? persistentCookieLifetime = null)
+        public virtual void CreateSessionSecurityToken(IEnumerable<KeyValuePair<string, object>> user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, bool persistent = false, TimeSpan? persistentCookieLifetime = null)
         {
             if (!string.IsNullOrEmpty(domain)) 
             {
@@ -45,12 +46,12 @@
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user["name"].ToString())
+                new Claim(ClaimTypes.Name, user.First(a => a.Key == "name").ToString())
             };
 
-            foreach (DictionaryEntry attribute in user)
+            foreach (var attribute in user)
             {
-                var claimType = attribute.Key.ToString();
+                var claimType = attribute.Key;
 
                 if (attribute.Value.GetType().IsArray)
                 {
