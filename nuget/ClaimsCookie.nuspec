@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>ClaimsCookie</id>
-    <version>0.9.10</version>
+    <version>1.0.0</version>
     <title>Serialize User Info in a Protected Cookie</title>
     <authors>Auth0</authors>
     <owners>Auth0</owners>
