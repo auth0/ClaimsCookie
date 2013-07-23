@@ -21,7 +21,10 @@
 
         protected override void InitializePropertiesFromConfiguration(string serviceName)
         {
-            this.ServiceConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
+            if (this.ServiceConfiguration != null)
+            {
+                this.ServiceConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
+            }
         }
 
         public virtual void CreateSessionSecurityToken(IEnumerable<KeyValuePair<string, object>> user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, TimeSpan? sessionCookieLifetime = null, bool persistent = false)

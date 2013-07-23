@@ -22,7 +22,10 @@
 
         protected override void InitializePropertiesFromConfiguration()
         {
-            this.FederationConfiguration.IdentityConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
+            if (this.FederationConfiguration != null)
+            {
+                this.FederationConfiguration.IdentityConfiguration.SecurityTokenHandlers.AddOrReplace(new MachineKeySessionSecurityTokenHandler());
+            }
         }
 
         public virtual void CreateSessionSecurityToken(IEnumerable<KeyValuePair<string, object>> user, string extraData = null, string domain = null, string path = null, bool requireSsl = false, bool httpOnly = true, string cookieName = null, TimeSpan? sessionCookieLifetime = null, bool persistent = false)
