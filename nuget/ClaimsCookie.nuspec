@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>ClaimsCookie</id>
-    <version>1.0.0</version>
+    <version>1.2.0</version>
     <title>Serialize User Info in a Protected Cookie</title>
     <authors>Auth0</authors>
     <owners>Auth0</owners>
@@ -45,9 +45,4 @@ The cookie will be chunked in multiple cookies to avoid hitting a limit if you a
       <frameworkAssembly assemblyName="System.IdentityModel.Services" targetFramework=".NETFramework4.5" />
     </frameworkAssemblies>
   </metadata>
-  <files>
-    <file src="..\ClaimsCookie\bin\Release\ClaimsCookie.dll" target="lib\net40" />
-    <file src="..\ClaimsCookie.Net45\bin\Release\ClaimsCookie.dll" target="lib\net45" />
-	<file src="content\**\*.*" target="content" />
-  </files>
 </package>
